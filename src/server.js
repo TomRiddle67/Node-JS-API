@@ -4,14 +4,19 @@ import { connectDB, disconnectDB } from './config/db.js';
 
 // Import Routes
 import movie_routes from './routes/movie_routes.js';
+import authRoutes from './routes/authRoutes.js';
 
 config();
 connectDB();
 
 const app = express();
 
+// middleware
+app.use(express.json()); 
+
 // API ROUTES
 app.use('/movies', movie_routes);
+app.use('/auth', authRoutes);
 
 
 
