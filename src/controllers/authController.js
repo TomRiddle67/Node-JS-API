@@ -11,7 +11,7 @@ const register = async (req, res) => {
     });
     if (user_exists){
         return res.status(400)
-        .json({error: 'user alreafy exists with this email'})
+        .json({error: 'user already exists with this email'})
     }
 //  Hash password
     const salt = await bcrypt.genSalt(10);
@@ -45,7 +45,37 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    res.json({ message: 'login' });
+    const {email, password} = req.body;
+
+    // check if user email exists in the table
+     const user = await prisma.user.findUnique({
+        where: {email: email},
+     });
+
+     if (!user){
+        return res
+        .status(401)
+        .json({error: 'invalid email or password'})
+    }
+
+// verify password
+const is_password = await bcryot.compare(password, user.password);
+
+if (!is_password) {
+    return res.status(401).json({error: 'invalid email or password'});
+}
+
+   res.status(201).json({
+        status: 'success',
+        data: {
+            user:{
+                id: user.id,
+                name: name,
+                email: email,
+            }
+        }
+    })
+
 };
 
 export { register, login };
