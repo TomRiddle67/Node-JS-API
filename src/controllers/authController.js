@@ -27,7 +27,7 @@ const register = async (req, res) => {
         },
     });
 
-    const token = generateToken(user.id);
+    const token = generateToken(user.id, res);
 
     res.status(201).json({
         status: 'success',
@@ -63,7 +63,7 @@ const login = async (req, res) => {
     }
 
 // verify password
-const is_password = await bcryt.compare(password, user.password);
+const is_password = await bcrypt.compare(password, user.password);
 
 if (!is_password) {
     return res.status(401).json({error: 'invalid email or password'});
