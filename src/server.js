@@ -6,6 +6,7 @@ import { connectDB, disconnectDB } from './config/db.js';
 // Import Routes
 import movie_routes from './routes/movie_routes.js';
 import authRoutes from './routes/authRoutes.js';
+import watchlist_routes from './routes/watchlist_routes.js';
 
 
 connectDB();
@@ -20,6 +21,7 @@ app.use(express.urlencoded({extended: true}));
 // API ROUTES
 app.use('/movies', movie_routes);
 app.use('/auth', authRoutes);
+app.use('/watchlist', watchlist_routes);
 
 
 
