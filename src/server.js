@@ -7,6 +7,9 @@ import { connectDB, disconnectDB } from './config/db.js';
 import movie_routes from './routes/movie_routes.js';
 import authRoutes from './routes/authRoutes.js';
 import watchlist_routes from './routes/watchlist_routes.js';
+import cookieParser from 'cookie-parser';
+
+
 
 
 connectDB();
@@ -16,6 +19,8 @@ const app = express();
 // middleware
 app.use(express.json()); 
 app.use(express.urlencoded({extended: true}));
+app.use(cookieParser());
+
 
 
 // API ROUTES
